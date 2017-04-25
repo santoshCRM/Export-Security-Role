@@ -6,4 +6,4 @@ This solution provide integration between Dynamics 365 and Google map Api.
 >Add googleMap.html webresource where you want to show google map(Dashboard, Form etc.)
 >Change cretia can be changed via quick find view.
 >Quick Find Active Accounts and Quick Find Active Contacts used. Name should be same.
->Remove "parent customer" from  Quick Find Active Contacts view filter criteria. It not support fetchxml.
+>Remove "parent customer" from  Quick Find Active Contacts view filter criteria. It not support fetchxml. 
