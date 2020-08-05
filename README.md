@@ -8,5 +8,7 @@ With the help of this plugin:-
 3. User can see Miscellaneous Privileges.
 4. Export result in Excel.
 
+For more Information check this blog 
+ http://dotnetdeveloper2012.blogspot.com/2018/09/dynamics-crm-export-security-role.html
 
  
