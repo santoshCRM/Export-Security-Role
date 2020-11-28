@@ -7,7 +7,7 @@
     <owners>Santosh Bhagat LinkeD365</owners>
     <title>Role Documenter</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <projectUrl>https://github.com/LinkeD365/ERDVisioBuilder</projectUrl>
+    <projectUrl>https://github.com/santoshCRM/Export-Security-Role</projectUrl>
     <iconUrl>https://linked365.blog/wp-content/uploads/2020/03/smallIcon.png</iconUrl>
     <description>A XrmToolBox tool to create Excel document for Roles in Dataverse</description>
     <releaseNotes>
@@ -20,6 +20,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="ERDBuilder\bin\Release\Plugins\ERDBuilder.dll" target="lib\net472\Plugins" />
+    <file src="RoleDocumenter\bin\Release\Plugins\RoleDocumenter.dll" target="lib\net472\Plugins" />
   </files>
 </package>
