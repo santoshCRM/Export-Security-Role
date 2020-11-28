@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("RoleDocumenter")]
 [assembly: AssemblyDescription("Retrieve and export the Security Role information in your Microsoft Dataverse environment")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("SantoshCRM")]
+[assembly: AssemblyCompany("SantoshCRM LinkeD365")]
 [assembly: AssemblyProduct("RoleDocumenter")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
