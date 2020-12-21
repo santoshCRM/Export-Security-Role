@@ -1,21 +1,73 @@
-﻿using System;
+﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Metadata;
+using Microsoft.Xrm.Sdk.Query;
+using RoleDocumenter.Properties;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Query;
-using RoleDocumenter.Properties;
 using XrmToolBox.Extensibility;
 
 namespace RoleDocumenter
 {
     public partial class RoleDocumenterCtl
     {
+        private List<EntityMetadata> entities;
+
+        protected List<EntityMetadata> Entities
+        {
+            get
+            {
+                if (entities == null)
+                {// Get localised names
+                    var query = new RetrieveAllEntitiesRequest();
+                    entities = ((RetrieveAllEntitiesResponse)Service.Execute(query)).EntityMetadata.ToList();
+
+                }
+                return entities;
+            }
+        }
+
+        private List<string> nonCustom;
+        protected List<string> NonCustom
+        {
+            get
+            {
+                if (nonCustom == null)
+                {
+                    nonCustom = new List<string>(BPFs);
+
+                    foreach (SecurityTab secTab in D365Tabs)
+                    {
+                       nonCustom = nonCustom.Concat(secTab.tables).ToList();
+                    }
+
+                }
+                return nonCustom;
+            }
+        }
+        private List<string> bpfs;
+        protected List<string> BPFs
+        {
+            get
+            {
+                if (bpfs == null)
+                {
+                    var workflowQry = new QueryExpression("workflow");
+                    workflowQry.ColumnSet.AddColumn("uniquename");
+                    workflowQry.Criteria.AddCondition("category", ConditionOperator.Equal, "4");
+                    var wkFLows = Service.RetrieveMultiple(workflowQry);
+                    bpfs = wkFLows.Entities.Select(r => r.GetAttributeValue<string>("uniquename")).ToList();
+
+                }
+                return bpfs;
+            }
+        }
+
         internal static List<MisprivilegeSet> MisPrivilegeSets { get; set; }
         internal static List<PrivilegeSet> PrivilegeSets { get; set; }
 
@@ -179,12 +231,12 @@ namespace RoleDocumenter
                     PrivilegeSets = e.Result as List<PrivilegeSet>;
                     grdview_role.DataSource = PrivilegeSets;
                     InitTableGrid();
-                   
+
                     grdview_misRole.DataSource = MisPrivilegeSets;
                     InitMiscGrid();
 
 
-                    
+
 
                 }
             });
@@ -192,7 +244,13 @@ namespace RoleDocumenter
 
         private void InitMiscGrid()
         {
-            grdview_misRole.Columns["Name"].MinimumWidth = 200;
+            grdview_misRole.Columns["Name"].Visible = false;
+            grdview_misRole.Columns["DisplayName"].MinimumWidth = 200;
+            grdview_misRole.Columns["DisplayName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            grdview_misRole.Columns["DisplayName"].DisplayIndex = 0;
+            grdview_misRole.Columns["DisplayName"].HeaderText = "Name";
+
+
             grdview_misRole.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             grdview_misRole.Columns["Name"].DisplayIndex = 0;
             grdview_misRole.Columns["Role"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -200,9 +258,13 @@ namespace RoleDocumenter
 
         private void InitTableGrid()
         {
-            grdview_role.Columns["Name"].MinimumWidth = 200;
-            grdview_role.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            grdview_role.Columns["Name"].DisplayIndex = 0;
+            grdview_role.Columns["DisplayName"].MinimumWidth = 200;
+            grdview_role.Columns["DisplayName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            grdview_role.Columns["DisplayName"].DisplayIndex = 0;
+
+            grdview_role.Columns["DisplayName"].HeaderText = "Name";
+
+            grdview_role.Columns["Name"].Visible = false;
             grdview_role.Columns["Create"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
 
             grdview_role.Columns["Read"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -217,7 +279,7 @@ namespace RoleDocumenter
         private object RolePrivileges(SecurityRole selectedRole)
         {
             EntityCollection returnCollection;
-            var privilege = new List<PrivilegeSet>();
+            var privileges = new List<PrivilegeSet>();
             MisPrivilegeSets = new List<MisprivilegeSet>();
             int fetchCount = 5000;// Initialize the page number.
             int pageNumber = 1;// Initialize the number of records.
@@ -237,7 +299,8 @@ namespace RoleDocumenter
 "    <link-entity name='privilege' from='privilegeid' to='privilegeid'  alias='privilege' >" +
 "      <attribute name='accessright' />" +
 "      <attribute name='name' />" +
-"    </link-entity>" +
+      "<attribute name = 'canbeentityreference' />" +
+ "    </link-entity>" +
 "  </entity>" +
 "</fetch>";
             while (true)
@@ -268,238 +331,290 @@ namespace RoleDocumenter
                     break;
                 }
             }
-            PrivilegeSet pri = null;
 
-            bool check = true;
             foreach (Entity ent in returnCollection.Entities)
             {
-                if (((AliasedValue)ent.Attributes["objecttype.objecttypecode"]).Value.ToString() == "none")
+                var logicalName = ((AliasedValue)ent.Attributes["objecttype.objecttypecode"]).Value.ToString();
+                var isEntity = (bool)((AliasedValue)ent.Attributes["privilege.canbeentityreference"]).Value;
+                var priName = ((AliasedValue)ent.Attributes["privilege.name"]).Value.ToString();
+                if (logicalName == "activitypointer") AddPermission(ent, privileges);
+                else if (TableExlusionList.Contains(logicalName)) { }
+                //   else if (CustomisationList.Contains(logicalName)) AddPermission(ent, "Customization");
+                else if (PrvExclusionList.Contains(priName)) { }
+                else if (TablePrefixes.Any(tp => priName.Contains(tp))) AddPermission(ent, privileges);
+                else if (!isEntity) // not an entity
                 {
-                    MisprivilegeSet mispri = new MisprivilegeSet(((AliasedValue)ent.Attributes["privilege.name"]).Value.ToString());
-                    MisPrivilegeSets.Add(mispri);
+                    AddMiscPriv(ent);
                 }
                 else
                 {
-                    var item = privilege.FirstOrDefault(i => i.Name == ((AliasedValue)ent.Attributes["objecttype.objecttypecode"]).Value.ToString());
+                    AddPermission(ent, privileges);
 
-                    if (item != null)
-                    {
-                        pri = (PrivilegeSet)item; check = false;
-                    }
-                    else
-                    {
-                        pri = new PrivilegeSet(((AliasedValue)ent.Attributes["objecttype.objecttypecode"]).Value.ToString());
-                        check = true;
-                    }
-
-
-                    #region Switch Case
-                    switch (((AliasedValue)ent.Attributes["privilege.accessright"]).Value.ToString())
-                    {
-                        case "1"://READ
-                            {
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
-                                {
-                                    pri.Read = Resources.user;
-                                    pri.Read.Tag = "User";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
-                                {
-                                    pri.Read = Resources.BU;
-                                    pri.Read.Tag = "Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
-                                {
-                                    pri.Read = Resources.P_BU;
-                                    pri.Read.Tag = "Parent: Child Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
-                                {
-                                    pri.Read = Resources.organization;
-                                    pri.Read.Tag = "Organization";
-                                }
-                                break;
-                            }
-                        case "2"://WRITE
-                            {
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
-                                {
-                                    pri.Write = Resources.user;
-                                    pri.Write.Tag = "User";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
-                                {
-                                    pri.Write = Resources.BU;
-                                    pri.Write.Tag = "Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
-                                {
-                                    pri.Write = Resources.P_BU;
-                                    pri.Write.Tag = "Parent: Child Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
-                                {
-                                    pri.Write = Resources.organization;
-                                    pri.Write.Tag = "Organization";
-                                }
-                                break;
-                            }
-                        case "4"://APPEND
-                            {
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
-                                {
-                                    pri.Append = Resources.user;
-                                    pri.Append.Tag = "User";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
-                                {
-                                    pri.Append = Resources.BU;
-                                    pri.Append.Tag = "Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
-                                {
-                                    pri.Append = Resources.P_BU;
-                                    pri.Append.Tag = "Parent: Child Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
-                                {
-                                    pri.Append = Resources.organization;
-                                    pri.Append.Tag = "Organization";
-                                }
-                                break;
-                            }
-                        case "16"://APPENDTO
-                            {
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
-                                {
-                                    pri.AppendTo = Resources.user;
-                                    pri.AppendTo.Tag = "User";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
-                                {
-                                    pri.AppendTo = Resources.BU;
-                                    pri.AppendTo.Tag = "Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
-                                {
-                                    pri.AppendTo = Resources.P_BU;
-                                    pri.AppendTo.Tag = "Parent: Child Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
-                                {
-                                    pri.AppendTo = Resources.organization;
-                                    pri.AppendTo.Tag = "Organization";
-                                }
-                                break;
-                            }
-                        case "32"://CREATE
-                            {
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
-                                {
-                                    pri.Create = Resources.user;
-                                    pri.Create.Tag = "User";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
-                                {
-                                    pri.Create = Resources.BU;
-                                    pri.Create.Tag = "Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
-                                {
-                                    pri.Create = Resources.P_BU;
-                                    pri.Create.Tag = "Parent: Child Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
-                                {
-                                    pri.Create = Resources.organization;
-                                    pri.Create.Tag = "Organization";
-                                }
-                                break;
-                            }
-                        case "65536"://DELETE
-                            {
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
-                                {
-                                    pri.Delete = Resources.user;
-                                    pri.Delete.Tag = "User";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
-                                {
-                                    pri.Delete = Resources.BU;
-                                    pri.Delete.Tag = "Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
-                                {
-                                    pri.Delete = Resources.P_BU;
-                                    pri.Read.Tag = "Parent: Child Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
-                                {
-                                    pri.Delete = Resources.organization;
-                                    pri.Delete.Tag = "Organization";
-                                }
-                                break;
-                            }
-                        case "262144"://SHARE
-                            {
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
-                                {
-                                    pri.Share = Resources.user;
-                                    pri.Share.Tag = "User";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
-                                {
-                                    pri.Share = Resources.BU;
-                                    pri.Share.Tag = "Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
-                                {
-                                    pri.Share = Resources.P_BU;
-                                    pri.Share.Tag = "Parent: Child Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
-                                {
-                                    pri.Share = Resources.organization;
-                                    pri.Share.Tag = "Organization";
-                                }
-                                break;
-                            }
-                        case "524288"://ASSIGN
-                            {
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
-                                {
-                                    pri.Assign = Resources.user;
-                                    pri.Assign.Tag = "User";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
-                                {
-                                    pri.Assign = Resources.BU;
-                                    pri.Assign.Tag = "Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
-                                {
-                                    pri.Assign = Resources.P_BU;
-                                    pri.Assign.Tag = "Parent: Child Business Unit";
-                                }
-                                if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
-                                {
-                                    pri.Assign = Resources.organization;
-                                    pri.Assign.Tag = "Organization";
-                                }
-                                break;
-                            }
-                    }
-                    #endregion
-                    if (check)
-                        privilege.Add(pri);
                 }
             }
 
-            return privilege;
+            return privileges;
         }
 
+        private void AddMiscPriv(Entity ent)
+        {
+            AddMiscPriv(ent, ((AliasedValue)ent.Attributes["privilege.name"]).Value.ToString());
+        }
 
-        internal object saveExcel(string excelname)
+        private void AddMiscPriv(Entity ent, string privName)
+        {
+            MisprivilegeSet mispri = new MisprivilegeSet(privName, GetMiscDisplay(privName));
+            // CC Some misc settings have depth
+            switch (ent.Attributes["privilegedepthmask"].ToString())
+            {
+                case "1":
+                    mispri.Role = Resources.user;
+                    mispri.Role.Tag = "User";
+                    break;
+                case "2":
+                    mispri.Role = Resources.BU;
+                    mispri.Role.Tag = "Business Unit";
+                    break;
+                case "4":
+                    mispri.Role = Resources.P_BU;
+                    mispri.Role.Tag = "Parent: Child Business Unit";
+                    break;
+                case "8":
+                    mispri.Role = Resources.organization;
+                    mispri.Role.Tag = "Organisation";
+                    break;
+                default:
+                    mispri.Role = Resources.organization;
+                    mispri.Role.Tag = "Organisation";
+                    break;
+            }
+            MisPrivilegeSets.Add(mispri);
+        }
+
+        private void AddPermission(Entity ent, List<PrivilegeSet> privileges)
+        {
+            //  PrivilegeSet pri = null;
+            bool check = true;
+            var logicalName = ((AliasedValue)ent.Attributes["objecttype.objecttypecode"]).Value.ToString();
+            if (CustomisationList.Contains(logicalName)) logicalName = "Customizations";
+
+            var priSet = privileges.FirstOrDefault(i => i.Name == logicalName);
+
+            if (priSet == null)
+            {
+                priSet = new PrivilegeSet(logicalName, chkLocalised.Checked ? (Entities.FirstOrDefault(entity => entity.LogicalName == logicalName)?.DisplayName?.UserLocalizedLabel?.Label ?? logicalName) : logicalName);
+                privileges.Add(priSet);
+                //check = true;
+            }
+
+
+            #region Switch Case
+            switch (((AliasedValue)ent.Attributes["privilege.accessright"]).Value.ToString())
+            {
+                case "1"://READ
+                    {
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
+                        {
+                            priSet.Read = Resources.user;
+                            priSet.Read.Tag = "User";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
+                        {
+                            priSet.Read = Resources.BU;
+                            priSet.Read.Tag = "Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
+                        {
+                            priSet.Read = Resources.P_BU;
+                            priSet.Read.Tag = "Parent: Child Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
+                        {
+                            priSet.Read = Resources.organization;
+                            priSet.Read.Tag = "Organization";
+                        }
+                        break;
+                    }
+                case "2"://WRITE
+                    {
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
+                        {
+                            priSet.Write = Resources.user;
+                            priSet.Write.Tag = "User";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
+                        {
+                            priSet.Write = Resources.BU;
+                            priSet.Write.Tag = "Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
+                        {
+                            priSet.Write = Resources.P_BU;
+                            priSet.Write.Tag = "Parent: Child Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
+                        {
+                            priSet.Write = Resources.organization;
+                            priSet.Write.Tag = "Organization";
+                        }
+                        break;
+                    }
+                case "4"://APPEND
+                    {
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
+                        {
+                            priSet.Append = Resources.user;
+                            priSet.Append.Tag = "User";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
+                        {
+                            priSet.Append = Resources.BU;
+                            priSet.Append.Tag = "Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
+                        {
+                            priSet.Append = Resources.P_BU;
+                            priSet.Append.Tag = "Parent: Child Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
+                        {
+                            priSet.Append = Resources.organization;
+                            priSet.Append.Tag = "Organization";
+                        }
+                        break;
+                    }
+                case "16"://APPENDTO
+                    {
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
+                        {
+                            priSet.AppendTo = Resources.user;
+                            priSet.AppendTo.Tag = "User";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
+                        {
+                            priSet.AppendTo = Resources.BU;
+                            priSet.AppendTo.Tag = "Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
+                        {
+                            priSet.AppendTo = Resources.P_BU;
+                            priSet.AppendTo.Tag = "Parent: Child Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
+                        {
+                            priSet.AppendTo = Resources.organization;
+                            priSet.AppendTo.Tag = "Organization";
+                        }
+                        break;
+                    }
+                case "32"://CREATE
+                    {
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
+                        {
+                            priSet.Create = Resources.user;
+                            priSet.Create.Tag = "User";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
+                        {
+                            priSet.Create = Resources.BU;
+                            priSet.Create.Tag = "Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
+                        {
+                            priSet.Create = Resources.P_BU;
+                            priSet.Create.Tag = "Parent: Child Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
+                        {
+                            priSet.Create = Resources.organization;
+                            priSet.Create.Tag = "Organization";
+                        }
+                        break;
+                    }
+                case "65536"://DELETE
+                    {
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
+                        {
+                            priSet.Delete = Resources.user;
+                            priSet.Delete.Tag = "User";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
+                        {
+                            priSet.Delete = Resources.BU;
+                            priSet.Delete.Tag = "Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
+                        {
+                            priSet.Delete = Resources.P_BU;
+                            priSet.Read.Tag = "Parent: Child Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
+                        {
+                            priSet.Delete = Resources.organization;
+                            priSet.Delete.Tag = "Organization";
+                        }
+                        break;
+                    }
+                case "262144"://SHARE
+                    {
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
+                        {
+                            priSet.Share = Resources.user;
+                            priSet.Share.Tag = "User";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
+                        {
+                            priSet.Share = Resources.BU;
+                            priSet.Share.Tag = "Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
+                        {
+                            priSet.Share = Resources.P_BU;
+                            priSet.Share.Tag = "Parent: Child Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
+                        {
+                            priSet.Share = Resources.organization;
+                            priSet.Share.Tag = "Organization";
+                        }
+                        break;
+                    }
+                case "524288"://ASSIGN
+                    {
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "1")//User
+                        {
+                            priSet.Assign = Resources.user;
+                            priSet.Assign.Tag = "User";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "2")//Business Unit
+                        {
+                            priSet.Assign = Resources.BU;
+                            priSet.Assign.Tag = "Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "4")//Parent: Child Business Unit
+                        {
+                            priSet.Assign = Resources.P_BU;
+                            priSet.Assign.Tag = "Parent: Child Business Unit";
+                        }
+                        if (ent.Attributes["privilegedepthmask"].ToString() == "8")//Organisation
+                        {
+                            priSet.Assign = Resources.organization;
+                            priSet.Assign.Tag = "Organization";
+                        }
+                        break;
+                    }
+            }
+            #endregion
+            //if (check)
+            //    privileges.Add(priSet);
+        }
+
+        private string GetMiscDisplay(string miscName)
+        {
+            return MiscPrivs.FirstOrDefault(mp => mp.Name == miscName)?.Display ?? miscName;
+        }
+
+        internal string saveExcel(string excelname)
         {
 
             SaveFileDialog sfd = new SaveFileDialog();// Create save the Excel

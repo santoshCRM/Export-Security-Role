@@ -1,11 +1,7 @@
-﻿using System;
+﻿using RoleDocumenter.Properties;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using RoleDocumenter.Properties;
 
 namespace RoleDocumenter
 {
@@ -22,11 +18,11 @@ namespace RoleDocumenter
 
             if (sortOrder == SortOrder.Ascending)
             {
-                returnValue = x.Name.CompareTo(y.Name);
+                returnValue = x.DisplayName.CompareTo(y.DisplayName);
             }
             else
             {
-                returnValue = y.Name.CompareTo(x.Name);
+                returnValue = y.DisplayName.CompareTo(x.DisplayName);
             }
 
             return returnValue;
@@ -37,10 +33,12 @@ namespace RoleDocumenter
     class Privilege
     {
         public string Name { get; set; }
+        public string DisplayName { get; set; }
 
-        public Privilege(string name)
+        public Privilege(string name, string displayName)
         {
             Name = name;
+            DisplayName = displayName;
         }
     }
     internal class PrivilegeSet : Privilege
@@ -63,8 +61,11 @@ namespace RoleDocumenter
 
         public Image Share { get; set; }
 
-        public PrivilegeSet(string name) : base(name)
+
+
+        public PrivilegeSet(string logicalName, string displayName) : base(logicalName, displayName)
         {
+            //  DisplayName = displayName;
             Create = Resources.none;
             Create.Tag = "None";
             Read = Resources.none;
@@ -81,8 +82,8 @@ namespace RoleDocumenter
             Assign.Tag = "None";
             Share = Resources.none;
             Share.Tag = "None";
-
         }
+        public PrivilegeSet(string logicalName) : this(logicalName, logicalName) { }
 
 
 
@@ -94,7 +95,7 @@ namespace RoleDocumenter
         public Image Role { get; set; }
 
 
-        public MisprivilegeSet(string name) : base(name)
+        public MisprivilegeSet(string name, string display) : base(name, display)
         {
 
             Role = Resources.organization;
@@ -103,9 +104,32 @@ namespace RoleDocumenter
 
         }
 
-
+        public MisprivilegeSet(string name) : this(name, name) { }
 
 
     }
+
+    internal class SecurityTab
+    {
+        public string TabName { get; set; }
+
+        public List<string> tables { get; set; }
+
+        public List<string> miscPrivs { get; set; }
+    }
+
+    internal class MiscPriv
+    {
+        public string Name { get; set; }
+        public string Display { get; set; }
+
+        public MiscPriv(string name, string display)
+        {
+            Name = name;
+            Display = display;
+        }
+    }
+
+
 
 }

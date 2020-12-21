@@ -11,7 +11,14 @@
     <iconUrl>https://linked365.blog/wp-content/uploads/2020/03/smallIcon.png</iconUrl>
     <description>A XrmToolBox tool to create Excel document for Roles in Dataverse</description>
     <releaseNotes>
-      Initial version
+      #3 Added code to show only activities in list rather than each
+      #4 Added code to elaborate Misc Priv that are not org level
+      #5 Added checkbox to display using Table names and hard coded translations taken from security in d365
+        Added settings config to keep the checked value
+      #6 added button to export in D365/Power Platform layout of the numerous tabs
+      #7 Fixed bug when cancelling save causes crash
+      
+      added app insights
     </releaseNotes>
     <copyright>Copyright 2020</copyright>
     <tags>XrmToolBox Plugins Role Documenter</tags>

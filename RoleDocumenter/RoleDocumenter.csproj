@@ -150,6 +150,9 @@
     <Compile Include="RoleDocumenterCtl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="RoleDocumenterCtl.D365Layout.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="RoleDocumenterCtl.designer.cs">
       <DependentUpon>RoleDocumenterCtl.cs</DependentUpon>
     </Compile>
@@ -158,6 +161,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="SecurityRole.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

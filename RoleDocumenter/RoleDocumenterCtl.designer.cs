@@ -35,7 +35,9 @@
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnRetrieveRoles = new System.Windows.Forms.ToolStripButton();
             this.btnExport = new System.Windows.Forms.ToolStripButton();
+            this.btnExport_D365 = new System.Windows.Forms.ToolStripButton();
             this.splitMain = new System.Windows.Forms.SplitContainer();
+            this.chkLocalised = new System.Windows.Forms.CheckBox();
             this.drp_roles = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.splitHeaderGrids = new System.Windows.Forms.SplitContainer();
@@ -98,10 +100,11 @@
             this.tsbClose,
             this.tssSeparator1,
             this.btnRetrieveRoles,
-            this.btnExport});
+            this.btnExport,
+            this.btnExport_D365});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
-            this.toolStripMenu.Size = new System.Drawing.Size(559, 31);
+            this.toolStripMenu.Size = new System.Drawing.Size(882, 31);
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
             // 
@@ -137,6 +140,16 @@
             this.btnExport.ToolTipText = "Export to Excel";
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
+            // btnExport_D365
+            // 
+            this.btnExport_D365.Image = global::RoleDocumenter.Properties.Resources.export;
+            this.btnExport_D365.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExport_D365.Name = "btnExport_D365";
+            this.btnExport_D365.Size = new System.Drawing.Size(137, 28);
+            this.btnExport_D365.Text = "Export D365 Layout";
+            this.btnExport_D365.ToolTipText = "Export to Excel";
+            this.btnExport_D365.Click += new System.EventHandler(this.BtnExport_D365_Click);
+            // 
             // splitMain
             // 
             this.splitMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -148,15 +161,27 @@
             // 
             // splitMain.Panel1
             // 
+            this.splitMain.Panel1.Controls.Add(this.chkLocalised);
             this.splitMain.Panel1.Controls.Add(this.drp_roles);
             this.splitMain.Panel1.Controls.Add(this.label1);
             // 
             // splitMain.Panel2
             // 
             this.splitMain.Panel2.Controls.Add(this.splitHeaderGrids);
-            this.splitMain.Size = new System.Drawing.Size(559, 628);
+            this.splitMain.Size = new System.Drawing.Size(882, 628);
             this.splitMain.SplitterDistance = 25;
             this.splitMain.TabIndex = 5;
+            // 
+            // chkLocalised
+            // 
+            this.chkLocalised.AutoSize = true;
+            this.chkLocalised.Location = new System.Drawing.Point(757, 5);
+            this.chkLocalised.Name = "chkLocalised";
+            this.chkLocalised.Size = new System.Drawing.Size(96, 17);
+            this.chkLocalised.TabIndex = 4;
+            this.chkLocalised.Text = "Display Names";
+            this.chkLocalised.UseVisualStyleBackColor = true;
+            this.chkLocalised.CheckedChanged += new System.EventHandler(this.ChkLocalised_CheckedChanged);
             // 
             // drp_roles
             // 
@@ -200,7 +225,7 @@
             // splitHeaderGrids.Panel2
             // 
             this.splitHeaderGrids.Panel2.Controls.Add(this.splitSearchGrid);
-            this.splitHeaderGrids.Size = new System.Drawing.Size(559, 599);
+            this.splitHeaderGrids.Size = new System.Drawing.Size(882, 599);
             this.splitHeaderGrids.SplitterDistance = 25;
             this.splitHeaderGrids.TabIndex = 1;
             // 
@@ -311,7 +336,7 @@
             // splitSearchGrid.Panel2
             // 
             this.splitSearchGrid.Panel2.Controls.Add(this.splitGrids);
-            this.splitSearchGrid.Size = new System.Drawing.Size(559, 570);
+            this.splitSearchGrid.Size = new System.Drawing.Size(882, 570);
             this.splitSearchGrid.SplitterDistance = 25;
             this.splitSearchGrid.TabIndex = 1;
             // 
@@ -328,8 +353,8 @@
             // splitSearch.Panel2
             // 
             this.splitSearch.Panel2.Controls.Add(this.txtSearch);
-            this.splitSearch.Size = new System.Drawing.Size(559, 25);
-            this.splitSearch.SplitterDistance = 45;
+            this.splitSearch.Size = new System.Drawing.Size(882, 25);
+            this.splitSearch.SplitterDistance = 71;
             this.splitSearch.TabIndex = 2;
             // 
             // lblSearch
@@ -347,7 +372,7 @@
             this.txtSearch.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtSearch.Location = new System.Drawing.Point(0, 0);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(510, 20);
+            this.txtSearch.Size = new System.Drawing.Size(807, 20);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
@@ -364,8 +389,8 @@
             // splitGrids.Panel2
             // 
             this.splitGrids.Panel2.Controls.Add(this.grpMisc);
-            this.splitGrids.Size = new System.Drawing.Size(559, 541);
-            this.splitGrids.SplitterDistance = 342;
+            this.splitGrids.Size = new System.Drawing.Size(882, 541);
+            this.splitGrids.SplitterDistance = 539;
             this.splitGrids.TabIndex = 0;
             // 
             // grpTable
@@ -374,7 +399,7 @@
             this.grpTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpTable.Location = new System.Drawing.Point(0, 0);
             this.grpTable.Name = "grpTable";
-            this.grpTable.Size = new System.Drawing.Size(342, 541);
+            this.grpTable.Size = new System.Drawing.Size(539, 541);
             this.grpTable.TabIndex = 4;
             this.grpTable.TabStop = false;
             this.grpTable.Text = "Table Privileges";
@@ -394,7 +419,7 @@
             this.grdview_role.RowHeadersWidth = 62;
             this.grdview_role.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdview_role.ShowEditingIcon = false;
-            this.grdview_role.Size = new System.Drawing.Size(336, 522);
+            this.grdview_role.Size = new System.Drawing.Size(533, 522);
             this.grdview_role.TabIndex = 3;
             this.grdview_role.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grdview_role_ColumnHeaderMouseClick);
             // 
@@ -404,7 +429,7 @@
             this.grpMisc.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpMisc.Location = new System.Drawing.Point(0, 0);
             this.grpMisc.Name = "grpMisc";
-            this.grpMisc.Size = new System.Drawing.Size(213, 541);
+            this.grpMisc.Size = new System.Drawing.Size(339, 541);
             this.grpMisc.TabIndex = 5;
             this.grpMisc.TabStop = false;
             this.grpMisc.Text = "Miscellaneous Privileges";
@@ -423,7 +448,7 @@
             this.grdview_misRole.RowHeadersVisible = false;
             this.grdview_misRole.RowHeadersWidth = 62;
             this.grdview_misRole.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdview_misRole.Size = new System.Drawing.Size(207, 522);
+            this.grdview_misRole.Size = new System.Drawing.Size(333, 522);
             this.grdview_misRole.TabIndex = 4;
             // 
             // RoleDocumenterCtl
@@ -433,7 +458,8 @@
             this.Controls.Add(this.splitMain);
             this.Controls.Add(this.toolStripMenu);
             this.Name = "RoleDocumenterCtl";
-            this.Size = new System.Drawing.Size(559, 659);
+            this.Size = new System.Drawing.Size(882, 659);
+            this.OnCloseTool += new System.EventHandler(this.MyPluginControl_OnaCloseTool);
             this.Load += new System.EventHandler(this.RoleDocumenterCtl_Load);
             this.toolStripMenu.ResumeLayout(false);
             this.toolStripMenu.PerformLayout();
@@ -505,5 +531,7 @@
         private System.Windows.Forms.SplitContainer splitSearch;
         private System.Windows.Forms.Label lblSearch;
         private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.CheckBox chkLocalised;
+        private System.Windows.Forms.ToolStripButton btnExport_D365;
     }
 }
