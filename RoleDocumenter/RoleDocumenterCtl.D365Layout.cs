@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace RoleDocumenter
 {
@@ -10,7 +6,7 @@ namespace RoleDocumenter
     {
         private List<string> PrvExclusionList = new List<string> { "prvAppendActivity", "prvAppendToActivity", "prvDeleteActivity", "prvAssignActivity", "prvShareActivity" };
 
-        private List<string> TableExlusionList = new List<string> { "task", "appointment", "fax", "letter","customeraddress","canvasappextendedmetadata" };
+        private List<string> TableExlusionList = new List<string> { "task", "appointment", "fax", "letter", "customeraddress", "canvasappextendedmetadata" };
 
         private List<string> CustomisationList = new List<string> { "displaystring", "isvconfig", "ribboncommand", "ribboncontectgroup", "ribboncustomization",
             "ribbondiff","ribbonrule","ribbontabtocommandmap","sitemap","teamtemplate"};

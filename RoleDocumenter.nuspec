@@ -3,14 +3,18 @@
   <metadata>
     <id>ExportSecurityRole</id>
     <version>$version$</version>
-    <authors>Santosh Bhagat LinkeD365</authors>
-    <owners>Santosh Bhagat LinkeD365</owners>
+    <authors>Santosh Bhagat &amp; LinkeD365</authors>
+    <owners>Santosh Bhagat &amp; LinkeD365</owners>
     <title>Role Documenter</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/santoshCRM/Export-Security-Role</projectUrl>
     <iconUrl>https://linked365.blog/wp-content/uploads/2020/03/smallIcon.png</iconUrl>
     <description>A XrmToolBox tool to create Excel document for Roles in Dataverse</description>
     <releaseNotes>
+      #11 Add Multiple select table export ✔✔✔
+      #10 Merged EntitySecurityRole functionality with this 🙌
+      #12 Fixed Misc Priv making corrupt Excel file ✔
+      
       #3 Added code to show only activities in list rather than each
       #4 Added code to elaborate Misc Priv that are not org level
       #5 Added checkbox to display using Table names and hard coded translations taken from security in d365

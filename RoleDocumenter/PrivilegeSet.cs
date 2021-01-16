@@ -5,63 +5,71 @@ using System.Windows.Forms;
 
 namespace RoleDocumenter
 {
-    class PrivelegeComparer : IComparer<Privilege>
+    internal class MiscPriv
+    {
+        public MiscPriv(string name, string display)
+        {
+            Name = name;
+            Display = display;
+        }
+
+        public string Display { get; set; }
+
+        public string Name { get; set; }
+    }
+
+    internal class MisPrivilegeSet : Privilege
+    {
+        public MisPrivilegeSet(string name) : this(name, name)
+        {
+        }
+
+        public MisPrivilegeSet(string name, string display) : base(name, display)
+        {
+            Role = Resources.organization;
+            Role.Tag = "Organization";
+        }
+
+        public Image Role { get; set; }
+    }
+
+    class PrivilegeComparer : IComparer<Privilege>
     {
         SortOrder sortOrder = SortOrder.None;
-        public PrivelegeComparer(SortOrder sortingOrder)
-        {
-            sortOrder = sortingOrder;
-        }
+
+        public PrivilegeComparer(SortOrder sortingOrder) { sortOrder = sortingOrder; }
+
         public int Compare(Privilege x, Privilege y)
         {
             int returnValue = 1;
 
             if (sortOrder == SortOrder.Ascending)
-            {
                 returnValue = x.DisplayName.CompareTo(y.DisplayName);
-            }
             else
-            {
                 returnValue = y.DisplayName.CompareTo(x.DisplayName);
-            }
 
             return returnValue;
-
         }
     }
 
     class Privilege
     {
-        public string Name { get; set; }
-        public string DisplayName { get; set; }
-
         public Privilege(string name, string displayName)
         {
             Name = name;
             DisplayName = displayName;
         }
+
+        public string DisplayName { get; set; }
+
+        public string Name { get; set; }
     }
+
     internal class PrivilegeSet : Privilege
     {
-        // public string LogicalName { get; set; }
-
-        public Image Create { get; set; }
-
-        public Image Read { get; set; }
-
-        public Image Write { get; set; }
-
-        public Image Delete { get; set; }
-
-        public Image Append { get; set; }
-
-        public Image AppendTo { get; set; }
-
-        public Image Assign { get; set; }
-
-        public Image Share { get; set; }
-
-
+        public PrivilegeSet(string logicalName) : this(logicalName, logicalName)
+        {
+        }
 
         public PrivilegeSet(string logicalName, string displayName) : base(logicalName, displayName)
         {
@@ -83,53 +91,42 @@ namespace RoleDocumenter
             Share = Resources.none;
             Share.Tag = "None";
         }
-        public PrivilegeSet(string logicalName) : this(logicalName, logicalName) { }
 
+        public Image Append { get; set; }
 
+        public Image AppendTo { get; set; }
 
+        public Image Assign { get; set; }
 
+        // public string LogicalName { get; set; }
+        public Image Create { get; set; }
+
+        public Image Delete { get; set; }
+
+        public Image Read { get; set; }
+
+        public Image Share { get; set; }
+
+        public Image Write { get; set; }
     }
 
-    internal class MisprivilegeSet : Privilege
+    internal class TablePrivSet
     {
-        public Image Role { get; set; }
+        public string TableName { get; set; }
 
+        public List<PrivilegeSet> Privileges = new List<PrivilegeSet>();
 
-        public MisprivilegeSet(string name, string display) : base(name, display)
+        public TablePrivSet(string tableName)
         {
-
-            Role = Resources.organization;
-            Role.Tag = "Organization";
-
-
+            TableName = tableName;
         }
-
-        public MisprivilegeSet(string name) : this(name, name) { }
-
-
     }
-
     internal class SecurityTab
     {
-        public string TabName { get; set; }
+        public List<string> miscPrivs { get; set; }
 
         public List<string> tables { get; set; }
 
-        public List<string> miscPrivs { get; set; }
+        public string TabName { get; set; }
     }
-
-    internal class MiscPriv
-    {
-        public string Name { get; set; }
-        public string Display { get; set; }
-
-        public MiscPriv(string name, string display)
-        {
-            Name = name;
-            Display = display;
-        }
-    }
-
-
-
 }

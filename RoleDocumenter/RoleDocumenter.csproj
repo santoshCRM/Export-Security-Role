@@ -126,6 +126,9 @@
     <Reference Include="WeifenLuo.WinFormsUI.Docking.ThemeVS2015, Version=3.0.6.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
       <HintPath>..\packages\DockPanelSuite.ThemeVS2015.3.0.6\lib\net40\WeifenLuo.WinFormsUI.Docking.ThemeVS2015.dll</HintPath>
     </Reference>
+    <Reference Include="xrmtb.XrmToolBox.Controls, Version=2.2.9.0, Culture=neutral, PublicKeyToken=34def2c40500c62c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xrmtb.XrmToolBox.Controls.2.2.9\lib\net47\xrmtb.XrmToolBox.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="XrmToolBox, Version=1.2020.6.40, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\XrmToolBoxPackage.1.2020.6.40\lib\net462\XrmToolBox.exe</HintPath>
     </Reference>
@@ -140,6 +143,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Popup\TableSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\TableSelect.Designer.cs">
+      <DependentUpon>TableSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="PrivilegeSet.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -160,6 +169,9 @@
     <Compile Include="RoleDocumenterCtl.Methods.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="RoleDocumenterCtl.Table.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="SecurityRole.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
@@ -168,6 +180,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Popup\TableSelect.resx">
+      <DependentUpon>TableSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -206,11 +221,14 @@
   <ItemGroup>
     <None Include="Resources\iconfinder_Revert_131718.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Double-Check.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
       IF NOT EXIST "$(TargetDir)Plugins" mkdir "$(TargetDir)Plugins"
-      IF $(ConfigurationName) == Release "$(SolutionDir)packages\ILMerge.3.0.41\tools\net452\ILMerge.exe" /targetplatform:v4,"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2" /lib:"C:\Windows\Microsoft.Net\Framework64\v4.0.30319" /out:"$(TargetDir)Plugins\$(TargetFileName)" $(TargetFileName) EPPlus.dll
+      IF $(ConfigurationName) == Release "$(SolutionDir)packages\ILMerge.3.0.41\tools\net452\ILMerge.exe" /targetplatform:v4,"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2" /lib:"C:\Windows\Microsoft.Net\Framework64\v4.0.30319" /out:"$(TargetDir)Plugins\$(TargetFileName)" $(TargetFileName) EPPlus.dll xrmtb.XrmToolBox.Controls.dll 
       IF $(ConfigurationName) == Debug COPY /Y "$(TargetFileName)" "$(TargetDir)Plugins"
 </PostBuildEvent>
   </PropertyGroup>
