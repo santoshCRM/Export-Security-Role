@@ -186,13 +186,11 @@ namespace RoleDocumenter
                                 var tablePriviliges = e.Result as List<TablePrivSet>;
 
                                 foreach (TablePrivSet tablePrivSet in tablePriviliges)
-                                    CreateExcel(
-                                        package,
-                                        tablePrivSet.Privileges,
-                                        null,
-                                        tablePrivSet.TableName);
+                                {
+                                    CreateExcel(package, tablePrivSet.Privileges, null, tablePrivSet.TableName);
 
-
+                                    ai.WriteEvent("Privileges Exported", tablePrivSet.Privileges.Count);
+                                }
                             }
                 });
             return package;

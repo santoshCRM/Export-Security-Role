@@ -437,12 +437,12 @@ namespace RoleDocumenter
             var frmMulti = new FrmMultiTable(Service);
             if (frmMulti.ShowDialog() != DialogResult.OK) return;
 
-            if (frmMulti.lstTables.CheckedEntities.Count == 0)
+            if (frmMulti.SelectedEntities.Count == 0)
                 return;
 
-            var package = CreateMultiTableExcel(frmMulti.lstTables.CheckedEntities);
+            var package = CreateMultiTableExcel(frmMulti.SelectedEntities);
 
-            var fileName = saveExcel("MultiTables" + DateTime.UtcNow.ToString("yyyyMMddhhmm"));
+            var fileName = saveExcel("MultiTables" + DateTime.UtcNow.ToString("yyyyMMddHHmm"));
             if (fileName == null)
                 return;
             try
@@ -453,7 +453,6 @@ namespace RoleDocumenter
             {
                 MessageBox.Show(exc.GetBaseException().Message, exc.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            ai.WriteEvent("Privileges Exported", TablePriviliges.Count);
         }
     }
 }

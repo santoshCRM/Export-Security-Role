@@ -70,6 +70,7 @@ namespace RoleDocumenter
             this.btnOk.TabIndex = 1;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // btnCancel
             // 
@@ -130,6 +131,6 @@ namespace RoleDocumenter
         private System.Windows.Forms.SplitContainer splitMain;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
-        public xrmtb.XrmToolBox.Controls.EntitiesListControl lstTables;
+        private xrmtb.XrmToolBox.Controls.EntitiesListControl lstTables;
     }
 }
