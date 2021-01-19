@@ -117,28 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lstTables.ListViewColDefs" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFx4cm10Yi5Ycm1Ub29sQm94LkNvbnRyb2xzLCBWZXJzaW9uPTIu
-        Mi45LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49MzRkZWYyYzQwNTAwYzYyYwUBAAAA
-        K3hybXRiLlhybVRvb2xCb3guQ29udHJvbHMuTGlzdFZpZXdDb2x1bW5EZWYGAAAAFTxOYW1lPmtfX0Jh
-        Y2tpbmdGaWVsZBw8RGlzcGxheU5hbWU+a19fQmFja2luZ0ZpZWxkFjxPcmRlcj5rX19CYWNraW5nRmll
-        bGQePElzR3JvdXBDb2x1bW4+a19fQmFja2luZ0ZpZWxkHzxJc0ZpbHRlckNvbHVtbj5rX19CYWNraW5n
-        RmllbGQWPFdpZHRoPmtfX0JhY2tpbmdGaWVsZAEBAAAAAAgBAQgCAAAABgMAAAALRGlzcGxheU5hbWUG
-        BAAAAAdEaXNwbGF5AAAAAAABZAAAAAs=
-</value>
-  </data>
-  <data name="lstTables.ListViewColDefs1" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFx4cm10Yi5Ycm1Ub29sQm94LkNvbnRyb2xzLCBWZXJzaW9uPTIu
-        Mi45LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49MzRkZWYyYzQwNTAwYzYyYwUBAAAA
-        K3hybXRiLlhybVRvb2xCb3guQ29udHJvbHMuTGlzdFZpZXdDb2x1bW5EZWYGAAAAFTxOYW1lPmtfX0Jh
-        Y2tpbmdGaWVsZBw8RGlzcGxheU5hbWU+a19fQmFja2luZ0ZpZWxkFjxPcmRlcj5rX19CYWNraW5nRmll
-        bGQePElzR3JvdXBDb2x1bW4+a19fQmFja2luZ0ZpZWxkHzxJc0ZpbHRlckNvbHVtbj5rX19CYWNraW5n
-        RmllbGQWPFdpZHRoPmtfX0JhY2tpbmdGaWVsZAEBAAAAAAgBAQgCAAAABgMAAAALTG9naWNhbE5hbWUG
-        BAAAAAxMb2dpY2FsIE5hbWUBAAAAAAFkAAAACw==
-</value>
-  </data>
+  <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

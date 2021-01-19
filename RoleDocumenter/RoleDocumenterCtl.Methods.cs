@@ -659,6 +659,7 @@ namespace RoleDocumenter
                 wkSheet.Cells[rowCount, 9].Value = privilegeSet.Share?.Tag ?? string.Empty;
 
             }
+            if (rowCount == 1) rowCount = 2;
             var table = wkSheet.Tables.Add(wkSheet.Cells[1, 1, rowCount, 9], sheetName.Replace(" ", string.Empty));
 
             table.TableStyle = TableStyles.Medium3;
@@ -680,8 +681,7 @@ namespace RoleDocumenter
                     wkSheet.Cells[rowCount, 1].Value = misPriv.Name;
                     wkSheet.Cells[rowCount, 2].Value = misPriv.Role?.Tag ?? string.Empty;
                 }
-                if (rowCount == 1)
-                    rowCount = 2;
+                if (rowCount == 1) rowCount = 2;
                 table = wkSheet.Tables.Add(wkSheet.Cells[1, 1, rowCount, 2], "MisPriv");
 
                 table.TableStyle = TableStyles.Medium3;

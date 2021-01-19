@@ -29,15 +29,30 @@ namespace RoleDocumenter
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMultiTable));
             this.splitMain = new System.Windows.Forms.SplitContainer();
+            this.splitGrid = new System.Windows.Forms.SplitContainer();
+            this.splitSearch = new System.Windows.Forms.SplitContainer();
+            this.lblTableSearch = new System.Windows.Forms.Label();
+            this.txtTableSearch = new System.Windows.Forms.TextBox();
+            this.gvMultiTables = new System.Windows.Forms.DataGridView();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.lstTables = new xrmtb.XrmToolBox.Controls.EntitiesListControl();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
             this.splitMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitGrid)).BeginInit();
+            this.splitGrid.Panel1.SuspendLayout();
+            this.splitGrid.Panel2.SuspendLayout();
+            this.splitGrid.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitSearch)).BeginInit();
+            this.splitSearch.Panel1.SuspendLayout();
+            this.splitSearch.Panel2.SuspendLayout();
+            this.splitSearch.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gvMultiTables)).BeginInit();
             this.SuspendLayout();
             // 
             // splitMain
@@ -50,7 +65,7 @@ namespace RoleDocumenter
             // 
             // splitMain.Panel1
             // 
-            this.splitMain.Panel1.Controls.Add(this.lstTables);
+            this.splitMain.Panel1.Controls.Add(this.splitGrid);
             // 
             // splitMain.Panel2
             // 
@@ -59,6 +74,80 @@ namespace RoleDocumenter
             this.splitMain.Size = new System.Drawing.Size(630, 478);
             this.splitMain.SplitterDistance = 414;
             this.splitMain.TabIndex = 1;
+            // 
+            // splitGrid
+            // 
+            this.splitGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitGrid.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitGrid.IsSplitterFixed = true;
+            this.splitGrid.Location = new System.Drawing.Point(0, 0);
+            this.splitGrid.Name = "splitGrid";
+            this.splitGrid.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitGrid.Panel1
+            // 
+            this.splitGrid.Panel1.Controls.Add(this.splitSearch);
+            // 
+            // splitGrid.Panel2
+            // 
+            this.splitGrid.Panel2.Controls.Add(this.gvMultiTables);
+            this.splitGrid.Size = new System.Drawing.Size(630, 414);
+            this.splitGrid.SplitterDistance = 25;
+            this.splitGrid.TabIndex = 0;
+            // 
+            // splitSearch
+            // 
+            this.splitSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitSearch.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitSearch.IsSplitterFixed = true;
+            this.splitSearch.Location = new System.Drawing.Point(0, 0);
+            this.splitSearch.Name = "splitSearch";
+            // 
+            // splitSearch.Panel1
+            // 
+            this.splitSearch.Panel1.Controls.Add(this.lblTableSearch);
+            // 
+            // splitSearch.Panel2
+            // 
+            this.splitSearch.Panel2.Controls.Add(this.txtTableSearch);
+            this.splitSearch.Size = new System.Drawing.Size(630, 25);
+            this.splitSearch.SplitterDistance = 47;
+            this.splitSearch.TabIndex = 0;
+            // 
+            // lblTableSearch
+            // 
+            this.lblTableSearch.AutoSize = true;
+            this.lblTableSearch.Location = new System.Drawing.Point(3, 7);
+            this.lblTableSearch.Name = "lblTableSearch";
+            this.lblTableSearch.Size = new System.Drawing.Size(44, 13);
+            this.lblTableSearch.TabIndex = 5;
+            this.lblTableSearch.Text = "Search:";
+            // 
+            // txtTableSearch
+            // 
+            this.txtTableSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtTableSearch.Location = new System.Drawing.Point(0, 0);
+            this.txtTableSearch.Name = "txtTableSearch";
+            this.txtTableSearch.Size = new System.Drawing.Size(579, 20);
+            this.txtTableSearch.TabIndex = 2;
+            this.txtTableSearch.TextChanged += new System.EventHandler(this.TxtTableSearch_TextChanged);
+            // 
+            // gvMultiTables
+            // 
+            this.gvMultiTables.AllowUserToAddRows = false;
+            this.gvMultiTables.AllowUserToDeleteRows = false;
+            this.gvMultiTables.AllowUserToOrderColumns = true;
+            this.gvMultiTables.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.gvMultiTables.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.gvMultiTables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gvMultiTables.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gvMultiTables.Location = new System.Drawing.Point(0, 0);
+            this.gvMultiTables.Name = "gvMultiTables";
+            this.gvMultiTables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gvMultiTables.Size = new System.Drawing.Size(630, 385);
+            this.gvMultiTables.TabIndex = 0;
+            this.gvMultiTables.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gvMultiTables_ColumnHeaderMouseClick);
             // 
             // btnOk
             // 
@@ -83,27 +172,6 @@ namespace RoleDocumenter
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // lstTables
-            // 
-            this.lstTables.AutoLoadData = true;
-            this.lstTables.AutosizeColumns = System.Windows.Forms.ColumnHeaderAutoResizeStyle.ColumnContent;
-            this.lstTables.Checkboxes = true;
-            this.lstTables.DisplaySolutionDropdown = false;
-            this.lstTables.DisplayToolbar = true;
-            this.lstTables.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstTables.EntityTypes = xrmtb.XrmToolBox.Controls.EnumEntityTypes.BothCustomAndSystem;
-            this.lstTables.LanguageCode = 1033;
-            this.lstTables.ListViewColDefs = new xrmtb.XrmToolBox.Controls.ListViewColumnDef[] {
-        ((xrmtb.XrmToolBox.Controls.ListViewColumnDef)(resources.GetObject("lstTables.ListViewColDefs"))),
-        ((xrmtb.XrmToolBox.Controls.ListViewColumnDef)(resources.GetObject("lstTables.ListViewColDefs1")))};
-            this.lstTables.Location = new System.Drawing.Point(0, 0);
-            this.lstTables.Name = "lstTables";
-            this.lstTables.RetrieveAsIfPublished = true;
-            this.lstTables.Service = null;
-            this.lstTables.Size = new System.Drawing.Size(630, 414);
-            this.lstTables.SolutionFilter = null;
-            this.lstTables.TabIndex = 0;
-            // 
             // FrmMultiTable
             // 
             this.AcceptButton = this.btnOk;
@@ -123,6 +191,17 @@ namespace RoleDocumenter
             this.splitMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).EndInit();
             this.splitMain.ResumeLayout(false);
+            this.splitGrid.Panel1.ResumeLayout(false);
+            this.splitGrid.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitGrid)).EndInit();
+            this.splitGrid.ResumeLayout(false);
+            this.splitSearch.Panel1.ResumeLayout(false);
+            this.splitSearch.Panel1.PerformLayout();
+            this.splitSearch.Panel2.ResumeLayout(false);
+            this.splitSearch.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitSearch)).EndInit();
+            this.splitSearch.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gvMultiTables)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -131,6 +210,11 @@ namespace RoleDocumenter
         private System.Windows.Forms.SplitContainer splitMain;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
-        private xrmtb.XrmToolBox.Controls.EntitiesListControl lstTables;
+        private System.Windows.Forms.SplitContainer splitGrid;
+        private System.Windows.Forms.SplitContainer splitSearch;
+        private System.Windows.Forms.Label lblTableSearch;
+        private System.Windows.Forms.TextBox txtTableSearch;
+        private System.Windows.Forms.DataGridView gvMultiTables;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

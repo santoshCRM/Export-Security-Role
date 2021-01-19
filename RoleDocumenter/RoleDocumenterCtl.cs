@@ -434,7 +434,9 @@ namespace RoleDocumenter
 
         private void BtnMultiple_Click(object sender, EventArgs e)
         {
-            var frmMulti = new FrmMultiTable(Service);
+            // dlTables.AllEntities
+
+            var frmMulti = new FrmMultiTable(dlTables.AllEntities);
             if (frmMulti.ShowDialog() != DialogResult.OK) return;
 
             if (frmMulti.SelectedEntities.Count == 0)
