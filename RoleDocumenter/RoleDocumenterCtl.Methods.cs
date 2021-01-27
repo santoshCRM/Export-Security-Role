@@ -375,13 +375,19 @@ namespace RoleDocumenter
 
         private string CreateXml(string fetchXml, string pagingCookie, int pageNumber, int fetchCount)
         {
-            StringReader stringReader = new StringReader(fetchXml);
-            XmlTextReader reader = new XmlTextReader(stringReader);
-
-            // Load document
             XmlDocument doc = new XmlDocument();
-            doc.Load(reader);
+            byte[] encodedString = Encoding.UTF8.GetBytes(fetchXml);
 
+            MemoryStream ms = new MemoryStream(encodedString);
+            ms.Flush();
+            ms.Position = 0;
+
+            //StringReader stringReader = new StringReader(fetchXml);
+            //XmlTextReader reader = new XmlTextReader(stringReader);
+           
+            //// Load document
+            //doc.Load(reader);
+            doc.Load(ms);
             return CreateXml(doc, pagingCookie, pageNumber, fetchCount);
         }
 
@@ -603,7 +609,10 @@ namespace RoleDocumenter
             foreach (Entity ent in returnCollection.Entities)
             {
                 var logicalName = ((AliasedValue)ent.Attributes["objecttype.objecttypecode"]).Value.ToString();
-                var isEntity = (bool)((AliasedValue)ent.Attributes["privilege.canbeentityreference"]).Value;
+                var isEntity = true;
+                if (ent.Attributes.Contains("privilege.canbeentityreference"))
+                    isEntity=(bool)((AliasedValue)ent.Attributes["privilege.canbeentityreference"]).Value;
+               
                 var priName = ((AliasedValue)ent.Attributes["privilege.name"]).Value.ToString();
                 if (logicalName == "activitypointer")
                     AddPermission(ent, privileges);

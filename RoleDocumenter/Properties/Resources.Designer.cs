@@ -93,16 +93,6 @@ namespace RoleDocumenter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap iconfinder_Revert_131718 {
-            get {
-                object obj = ResourceManager.GetObject("iconfinder_Revert_131718", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap none {
             get {
                 object obj = ResourceManager.GetObject("none", resourceCulture);
@@ -126,6 +116,16 @@ namespace RoleDocumenter.Properties {
         internal static System.Drawing.Bitmap P_BU {
             get {
                 object obj = ResourceManager.GetObject("P_BU", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Role_refresh {
+            get {
+                object obj = ResourceManager.GetObject("Role_refresh", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

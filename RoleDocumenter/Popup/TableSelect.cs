@@ -11,6 +11,7 @@ namespace RoleDocumenter
     {
         private class EntityView
         {
+            public bool isSelected { get; set; }
             public string DisplayName { get; set; }
             public string LogicalName { get; set; }
         }
@@ -59,6 +60,7 @@ namespace RoleDocumenter
 
         private void InitGrid()
         {
+            gvMultiTables.Columns["isSelected"].HeaderText = "Select";
             gvMultiTables.Columns["DisplayName"].MinimumWidth = 100;
             gvMultiTables.Columns["DisplayName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             gvMultiTables.Columns["DisplayName"].HeaderText = "Name";
@@ -66,6 +68,8 @@ namespace RoleDocumenter
             gvMultiTables.Columns["LogicalName"].MinimumWidth = 50;
             gvMultiTables.Columns["LogicalName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             gvMultiTables.Columns["LogicalName"].HeaderText = "Logical";
+
+            
 
         }
 
@@ -83,8 +87,9 @@ namespace RoleDocumenter
 
             //  SelectedEntities = Entities;
             var returnEntities = new List<EntityMetadata>();
-            SelectedEntities = EntityMetadatas.Where(em => gvMultiTables.SelectedRows
+            SelectedEntities = EntityMetadatas.Where(em => gvMultiTables.Rows
                                 .Cast<DataGridViewRow>()
+                                .Where(x => x.Cells[0].Value.ToString() == "True")
                                 .Any(dv => ((EntityView)dv.DataBoundItem).LogicalName == em.LogicalName)).ToList();
 
             Close();

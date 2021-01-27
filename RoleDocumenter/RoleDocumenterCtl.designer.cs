@@ -28,17 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
-            this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnExport = new System.Windows.Forms.ToolStripButton();
-            this.btnExport_D365 = new System.Windows.Forms.ToolStripButton();
-            this.btnMultiple = new System.Windows.Forms.ToolStripButton();
             this.splitMain = new System.Windows.Forms.SplitContainer();
-            this.btnRetRoles = new System.Windows.Forms.Button();
             this.chkLocalised = new System.Windows.Forms.CheckBox();
             this.drp_roles = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -64,15 +59,20 @@
             this.gvRoles = new System.Windows.Forms.DataGridView();
             this.splitFull = new System.Windows.Forms.SplitContainer();
             this.label7 = new System.Windows.Forms.Label();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnRetRoles = new System.Windows.Forms.Button();
+            this.tsbClose = new System.Windows.Forms.ToolStripButton();
+            this.btnExport = new System.Windows.Forms.ToolStripButton();
+            this.btnExport_D365 = new System.Windows.Forms.ToolStripButton();
+            this.btnMultiple = new System.Windows.Forms.ToolStripButton();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
@@ -132,48 +132,10 @@
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
             // 
-            // tsbClose
-            // 
-            this.tsbClose.Image = global::RoleDocumenter.Properties.Resources.tsbClose_Image;
-            this.tsbClose.Name = "tsbClose";
-            this.tsbClose.Size = new System.Drawing.Size(64, 28);
-            this.tsbClose.Text = "Close";
-            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
-            // 
             // tssSeparator1
             // 
             this.tssSeparator1.Name = "tssSeparator1";
             this.tssSeparator1.Size = new System.Drawing.Size(6, 31);
-            // 
-            // btnExport
-            // 
-            this.btnExport.Image = global::RoleDocumenter.Properties.Resources.export;
-            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(69, 28);
-            this.btnExport.Text = "Export";
-            this.btnExport.ToolTipText = "Export to Excel";
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
-            // btnExport_D365
-            // 
-            this.btnExport_D365.Image = global::RoleDocumenter.Properties.Resources.export;
-            this.btnExport_D365.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExport_D365.Name = "btnExport_D365";
-            this.btnExport_D365.Size = new System.Drawing.Size(162, 28);
-            this.btnExport_D365.Text = "Export Dataverse Layout";
-            this.btnExport_D365.ToolTipText = "Export to Excel";
-            this.btnExport_D365.Click += new System.EventHandler(this.BtnExport_D365_Click);
-            // 
-            // btnMultiple
-            // 
-            this.btnMultiple.Image = global::RoleDocumenter.Properties.Resources.Double_Check;
-            this.btnMultiple.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMultiple.Name = "btnMultiple";
-            this.btnMultiple.Size = new System.Drawing.Size(116, 28);
-            this.btnMultiple.Text = "Export Multiple";
-            this.btnMultiple.Visible = false;
-            this.btnMultiple.Click += new System.EventHandler(this.BtnMultiple_Click);
             // 
             // splitMain
             // 
@@ -198,25 +160,10 @@
             this.splitMain.SplitterDistance = 25;
             this.splitMain.TabIndex = 5;
             // 
-            // btnRetRoles
-            // 
-            this.btnRetRoles.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnRetRoles.Image = global::RoleDocumenter.Properties.Resources.iconfinder_Revert_131718;
-            this.btnRetRoles.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRetRoles.Location = new System.Drawing.Point(352, 1);
-            this.btnRetRoles.Name = "btnRetRoles";
-            this.btnRetRoles.Size = new System.Drawing.Size(133, 23);
-            this.btnRetRoles.TabIndex = 5;
-            this.btnRetRoles.Text = "Retrieve Roles";
-            this.btnRetRoles.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnRetRoles.UseVisualStyleBackColor = true;
-            this.btnRetRoles.Visible = false;
-            this.btnRetRoles.Click += new System.EventHandler(this.BtnRetRoles_Click);
-            // 
             // chkLocalised
             // 
             this.chkLocalised.AutoSize = true;
-            this.chkLocalised.Location = new System.Drawing.Point(757, 5);
+            this.chkLocalised.Location = new System.Drawing.Point(381, 5);
             this.chkLocalised.Name = "chkLocalised";
             this.chkLocalised.Size = new System.Drawing.Size(96, 17);
             this.chkLocalised.TabIndex = 4;
@@ -227,9 +174,9 @@
             // drp_roles
             // 
             this.drp_roles.FormattingEnabled = true;
-            this.drp_roles.Location = new System.Drawing.Point(53, 3);
+            this.drp_roles.Location = new System.Drawing.Point(45, 1);
             this.drp_roles.Name = "drp_roles";
-            this.drp_roles.Size = new System.Drawing.Size(277, 21);
+            this.drp_roles.Size = new System.Drawing.Size(190, 21);
             this.drp_roles.TabIndex = 3;
             this.drp_roles.SelectedIndexChanged += new System.EventHandler(this.drp_roles_SelectedIndexChanged);
             // 
@@ -330,8 +277,8 @@
             // 
             this.grdview_role.AllowUserToAddRows = false;
             this.grdview_role.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.grdview_role.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.grdview_role.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
             this.grdview_role.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdview_role.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdview_role.Location = new System.Drawing.Point(3, 16);
@@ -360,8 +307,8 @@
             // 
             this.grdview_misRole.AllowUserToAddRows = false;
             this.grdview_misRole.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.grdview_misRole.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.grdview_misRole.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
             this.grdview_misRole.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdview_misRole.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdview_misRole.Location = new System.Drawing.Point(3, 16);
@@ -491,8 +438,8 @@
             // 
             this.gvRoles.AllowUserToAddRows = false;
             this.gvRoles.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.gvRoles.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.gvRoles.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             this.gvRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gvRoles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gvRoles.Location = new System.Drawing.Point(0, 0);
@@ -544,24 +491,6 @@
             this.label7.TabIndex = 31;
             this.label7.Text = "Business Unit";
             // 
-            // pictureBox6
-            // 
-            this.pictureBox6.Image = global::RoleDocumenter.Properties.Resources.BU;
-            this.pictureBox6.Location = new System.Drawing.Point(137, 8);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(18, 17);
-            this.pictureBox6.TabIndex = 30;
-            this.pictureBox6.TabStop = false;
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Image = global::RoleDocumenter.Properties.Resources.organization;
-            this.pictureBox5.Location = new System.Drawing.Point(417, 7);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(18, 17);
-            this.pictureBox5.TabIndex = 29;
-            this.pictureBox5.TabStop = false;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -580,15 +509,6 @@
             this.label4.TabIndex = 27;
             this.label4.Text = "Parent: Child Business Unit";
             // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::RoleDocumenter.Properties.Resources.P_BU;
-            this.pictureBox3.Location = new System.Drawing.Point(250, 8);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(17, 17);
-            this.pictureBox3.TabIndex = 26;
-            this.pictureBox3.TabStop = false;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -597,15 +517,6 @@
             this.label3.Size = new System.Drawing.Size(29, 13);
             this.label3.TabIndex = 25;
             this.label3.Text = "User";
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::RoleDocumenter.Properties.Resources.user;
-            this.pictureBox2.Location = new System.Drawing.Point(74, 8);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(17, 17);
-            this.pictureBox2.TabIndex = 24;
-            this.pictureBox2.TabStop = false;
             // 
             // label2
             // 
@@ -616,6 +527,42 @@
             this.label2.TabIndex = 23;
             this.label2.Text = "None";
             // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Image = global::RoleDocumenter.Properties.Resources.BU;
+            this.pictureBox6.Location = new System.Drawing.Point(137, 8);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(18, 17);
+            this.pictureBox6.TabIndex = 30;
+            this.pictureBox6.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Image = global::RoleDocumenter.Properties.Resources.organization;
+            this.pictureBox5.Location = new System.Drawing.Point(417, 7);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(18, 17);
+            this.pictureBox5.TabIndex = 29;
+            this.pictureBox5.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::RoleDocumenter.Properties.Resources.P_BU;
+            this.pictureBox3.Location = new System.Drawing.Point(250, 8);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(17, 17);
+            this.pictureBox3.TabIndex = 26;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::RoleDocumenter.Properties.Resources.user;
+            this.pictureBox2.Location = new System.Drawing.Point(74, 8);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(17, 17);
+            this.pictureBox2.TabIndex = 24;
+            this.pictureBox2.TabStop = false;
+            // 
             // pictureBox1
             // 
             this.pictureBox1.ErrorImage = global::RoleDocumenter.Properties.Resources.none;
@@ -625,6 +572,60 @@
             this.pictureBox1.Size = new System.Drawing.Size(17, 17);
             this.pictureBox1.TabIndex = 22;
             this.pictureBox1.TabStop = false;
+            // 
+            // btnRetRoles
+            // 
+            this.btnRetRoles.FlatAppearance.BorderSize = 0;
+            this.btnRetRoles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRetRoles.ForeColor = System.Drawing.Color.White;
+            this.btnRetRoles.Image = global::RoleDocumenter.Properties.Resources.Role_refresh;
+            this.btnRetRoles.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRetRoles.Location = new System.Drawing.Point(241, 2);
+            this.btnRetRoles.Margin = new System.Windows.Forms.Padding(0);
+            this.btnRetRoles.Name = "btnRetRoles";
+            this.btnRetRoles.Size = new System.Drawing.Size(26, 20);
+            this.btnRetRoles.TabIndex = 5;
+            this.btnRetRoles.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnRetRoles.UseVisualStyleBackColor = true;
+            this.btnRetRoles.Click += new System.EventHandler(this.BtnRetRoles_Click);
+            // 
+            // tsbClose
+            // 
+            this.tsbClose.Image = global::RoleDocumenter.Properties.Resources.tsbClose_Image;
+            this.tsbClose.Name = "tsbClose";
+            this.tsbClose.Size = new System.Drawing.Size(64, 28);
+            this.tsbClose.Text = "Close";
+            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
+            // 
+            // btnExport
+            // 
+            this.btnExport.Image = global::RoleDocumenter.Properties.Resources.export;
+            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(68, 28);
+            this.btnExport.Text = "Export";
+            this.btnExport.ToolTipText = "Export to Excel";
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // btnExport_D365
+            // 
+            this.btnExport_D365.Image = global::RoleDocumenter.Properties.Resources.export;
+            this.btnExport_D365.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExport_D365.Name = "btnExport_D365";
+            this.btnExport_D365.Size = new System.Drawing.Size(161, 28);
+            this.btnExport_D365.Text = "Export Dataverse Layout";
+            this.btnExport_D365.ToolTipText = "Export to Excel";
+            this.btnExport_D365.Click += new System.EventHandler(this.BtnExport_D365_Click);
+            // 
+            // btnMultiple
+            // 
+            this.btnMultiple.Image = global::RoleDocumenter.Properties.Resources.Double_Check;
+            this.btnMultiple.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMultiple.Name = "btnMultiple";
+            this.btnMultiple.Size = new System.Drawing.Size(115, 28);
+            this.btnMultiple.Text = "Export Multiple";
+            this.btnMultiple.Visible = false;
+            this.btnMultiple.Click += new System.EventHandler(this.BtnMultiple_Click);
             // 
             // RoleDocumenterCtl
             // 

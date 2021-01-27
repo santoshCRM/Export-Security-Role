@@ -22,6 +22,7 @@ namespace RoleDocumenter
             WorkAsync(
                new WorkAsyncInfo
                {
+
                    //   Message = "Retrieving Roles for " + table.DisplayName?.UserLocalizedLabel?.Label ?? table.LogicalName,
                    Work =
                        (w, e) =>
@@ -37,7 +38,7 @@ namespace RoleDocumenter
                            TablePriviliges = e.Result as List<PrivilegeSet>;
                            gvRoles.DataSource = TablePriviliges;
                            InitRoleGrid();
-
+                           txtTableSearch.Text = string.Empty;
                        }
                });
         }

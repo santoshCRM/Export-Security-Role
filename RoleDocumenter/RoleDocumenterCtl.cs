@@ -82,10 +82,7 @@ namespace RoleDocumenter
 
         }
 
-        private void btnRetrieveRoles_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void drp_roles_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -380,6 +377,7 @@ namespace RoleDocumenter
         private void BtnRetRoles_Click(object sender, EventArgs e)
         {
             ExecuteMethod(PopulateRoles);
+            txtSearch.Text = string.Empty;
         }
 
         private void TabSetMain_SelectedIndexChanged(object sender, EventArgs e)
@@ -450,11 +448,14 @@ namespace RoleDocumenter
             try
             {
                 package.SaveAs(new FileInfo(fileName));
+                
             }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.GetBaseException().Message, exc.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+       
     }
 }
