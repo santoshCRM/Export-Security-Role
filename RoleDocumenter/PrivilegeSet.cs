@@ -44,9 +44,13 @@ namespace RoleDocumenter
             int returnValue = 1;
 
             if (sortOrder == SortOrder.Ascending)
+            {
                 returnValue = x.DisplayName.CompareTo(y.DisplayName);
+            }
             else
+            {
                 returnValue = y.DisplayName.CompareTo(x.DisplayName);
+            }
 
             return returnValue;
         }
@@ -92,22 +96,24 @@ namespace RoleDocumenter
             Share.Tag = "None";
         }
 
-        public Image Append { get; set; }
 
-        public Image AppendTo { get; set; }
 
-        public Image Assign { get; set; }
 
         // public string LogicalName { get; set; }
         public Image Create { get; set; }
+        public Image Read { get; set; }
+        public Image Write { get; set; }
+
 
         public Image Delete { get; set; }
+        public Image Append { get; set; }
 
-        public Image Read { get; set; }
+        public Image AppendTo { get; set; }
+        public Image Assign { get; set; }
+
 
         public Image Share { get; set; }
 
-        public Image Write { get; set; }
     }
 
     internal class TablePrivSet

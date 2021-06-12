@@ -28,12 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
+            this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnExport = new System.Windows.Forms.ToolStripButton();
+            this.btnExport_D365 = new System.Windows.Forms.ToolStripButton();
+            this.btnMultiple = new System.Windows.Forms.ToolStripButton();
             this.splitMain = new System.Windows.Forms.SplitContainer();
+            this.btnRetRoles = new System.Windows.Forms.Button();
             this.chkLocalised = new System.Windows.Forms.CheckBox();
             this.drp_roles = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -52,27 +57,22 @@
             this.tabTable = new System.Windows.Forms.TabPage();
             this.splitTableMain = new System.Windows.Forms.SplitContainer();
             this.splitTableTop = new System.Windows.Forms.SplitContainer();
+            this.dlTable = new System.Windows.Forms.ComboBox();
             this.lblTableSearch = new System.Windows.Forms.Label();
             this.lblTable = new System.Windows.Forms.Label();
-            this.dlTables = new xrmtb.XrmToolBox.Controls.EntitiesDropdownControl();
             this.txtTableSearch = new System.Windows.Forms.TextBox();
             this.gvRoles = new System.Windows.Forms.DataGridView();
             this.splitFull = new System.Windows.Forms.SplitContainer();
             this.label7 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btnRetRoles = new System.Windows.Forms.Button();
-            this.tsbClose = new System.Windows.Forms.ToolStripButton();
-            this.btnExport = new System.Windows.Forms.ToolStripButton();
-            this.btnExport_D365 = new System.Windows.Forms.ToolStripButton();
-            this.btnMultiple = new System.Windows.Forms.ToolStripButton();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
@@ -132,10 +132,48 @@
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
             // 
+            // tsbClose
+            // 
+            this.tsbClose.Image = global::RoleDocumenter.Properties.Resources.tsbClose_Image;
+            this.tsbClose.Name = "tsbClose";
+            this.tsbClose.Size = new System.Drawing.Size(64, 28);
+            this.tsbClose.Text = "Close";
+            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
+            // 
             // tssSeparator1
             // 
             this.tssSeparator1.Name = "tssSeparator1";
             this.tssSeparator1.Size = new System.Drawing.Size(6, 31);
+            // 
+            // btnExport
+            // 
+            this.btnExport.Image = global::RoleDocumenter.Properties.Resources.export;
+            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(69, 28);
+            this.btnExport.Text = "Export";
+            this.btnExport.ToolTipText = "Export to Excel";
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // btnExport_D365
+            // 
+            this.btnExport_D365.Image = global::RoleDocumenter.Properties.Resources.export;
+            this.btnExport_D365.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExport_D365.Name = "btnExport_D365";
+            this.btnExport_D365.Size = new System.Drawing.Size(162, 28);
+            this.btnExport_D365.Text = "Export Dataverse Layout";
+            this.btnExport_D365.ToolTipText = "Export to Excel";
+            this.btnExport_D365.Click += new System.EventHandler(this.BtnExport_D365_Click);
+            // 
+            // btnMultiple
+            // 
+            this.btnMultiple.Image = global::RoleDocumenter.Properties.Resources.Double_Check;
+            this.btnMultiple.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMultiple.Name = "btnMultiple";
+            this.btnMultiple.Size = new System.Drawing.Size(116, 28);
+            this.btnMultiple.Text = "Export Multiple";
+            this.btnMultiple.Visible = false;
+            this.btnMultiple.Click += new System.EventHandler(this.BtnMultiple_Click);
             // 
             // splitMain
             // 
@@ -160,6 +198,22 @@
             this.splitMain.SplitterDistance = 25;
             this.splitMain.TabIndex = 5;
             // 
+            // btnRetRoles
+            // 
+            this.btnRetRoles.FlatAppearance.BorderSize = 0;
+            this.btnRetRoles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRetRoles.ForeColor = System.Drawing.Color.White;
+            this.btnRetRoles.Image = global::RoleDocumenter.Properties.Resources.Role_refresh;
+            this.btnRetRoles.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRetRoles.Location = new System.Drawing.Point(241, 2);
+            this.btnRetRoles.Margin = new System.Windows.Forms.Padding(0);
+            this.btnRetRoles.Name = "btnRetRoles";
+            this.btnRetRoles.Size = new System.Drawing.Size(26, 20);
+            this.btnRetRoles.TabIndex = 5;
+            this.btnRetRoles.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnRetRoles.UseVisualStyleBackColor = true;
+            this.btnRetRoles.Click += new System.EventHandler(this.BtnRetRoles_Click);
+            // 
             // chkLocalised
             // 
             this.chkLocalised.AutoSize = true;
@@ -173,6 +227,8 @@
             // 
             // drp_roles
             // 
+            this.drp_roles.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.drp_roles.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.drp_roles.FormattingEnabled = true;
             this.drp_roles.Location = new System.Drawing.Point(45, 1);
             this.drp_roles.Name = "drp_roles";
@@ -277,8 +333,8 @@
             // 
             this.grdview_role.AllowUserToAddRows = false;
             this.grdview_role.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.grdview_role.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.grdview_role.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle19;
             this.grdview_role.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdview_role.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdview_role.Location = new System.Drawing.Point(3, 16);
@@ -307,8 +363,8 @@
             // 
             this.grdview_misRole.AllowUserToAddRows = false;
             this.grdview_misRole.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.grdview_misRole.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.grdview_misRole.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle20;
             this.grdview_misRole.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdview_misRole.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdview_misRole.Location = new System.Drawing.Point(3, 16);
@@ -383,9 +439,9 @@
             // 
             // splitTableTop.Panel1
             // 
+            this.splitTableTop.Panel1.Controls.Add(this.dlTable);
             this.splitTableTop.Panel1.Controls.Add(this.lblTableSearch);
             this.splitTableTop.Panel1.Controls.Add(this.lblTable);
-            this.splitTableTop.Panel1.Controls.Add(this.dlTables);
             // 
             // splitTableTop.Panel2
             // 
@@ -393,6 +449,17 @@
             this.splitTableTop.Size = new System.Drawing.Size(868, 30);
             this.splitTableTop.SplitterDistance = 317;
             this.splitTableTop.TabIndex = 4;
+            // 
+            // dlTable
+            // 
+            this.dlTable.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.dlTable.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.dlTable.FormattingEnabled = true;
+            this.dlTable.Location = new System.Drawing.Point(50, 5);
+            this.dlTable.Name = "dlTable";
+            this.dlTable.Size = new System.Drawing.Size(210, 21);
+            this.dlTable.TabIndex = 6;
+            this.dlTable.SelectedIndexChanged += new System.EventHandler(this.dlTable_SelectedIndexChanged);
             // 
             // lblTableSearch
             // 
@@ -412,23 +479,9 @@
             this.lblTable.TabIndex = 3;
             this.lblTable.Text = "Table:";
             // 
-            // dlTables
-            // 
-            this.dlTables.AutoLoadData = true;
-            this.dlTables.LanguageCode = 1033;
-            this.dlTables.Location = new System.Drawing.Point(48, 2);
-            this.dlTables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.dlTables.Name = "dlTables";
-            this.dlTables.Service = null;
-            this.dlTables.Size = new System.Drawing.Size(211, 25);
-            this.dlTables.SolutionFilter = null;
-            this.dlTables.TabIndex = 0;
-            this.dlTables.SelectedItemChanged += new System.EventHandler(this.DlTables_SelectedItemChanged);
-            // 
             // txtTableSearch
             // 
-            this.txtTableSearch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtTableSearch.Location = new System.Drawing.Point(0, 0);
+            this.txtTableSearch.Location = new System.Drawing.Point(0, 5);
             this.txtTableSearch.Name = "txtTableSearch";
             this.txtTableSearch.Size = new System.Drawing.Size(547, 20);
             this.txtTableSearch.TabIndex = 1;
@@ -438,8 +491,8 @@
             // 
             this.gvRoles.AllowUserToAddRows = false;
             this.gvRoles.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.gvRoles.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.gvRoles.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
             this.gvRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gvRoles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gvRoles.Location = new System.Drawing.Point(0, 0);
@@ -491,42 +544,6 @@
             this.label7.TabIndex = 31;
             this.label7.Text = "Business Unit";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(445, 9);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(66, 13);
-            this.label5.TabIndex = 28;
-            this.label5.Text = "Organization";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(277, 9);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(134, 13);
-            this.label4.TabIndex = 27;
-            this.label4.Text = "Parent: Child Business Unit";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(99, 10);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 13);
-            this.label3.TabIndex = 25;
-            this.label3.Text = "User";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(41, 8);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(33, 13);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "None";
-            // 
             // pictureBox6
             // 
             this.pictureBox6.Image = global::RoleDocumenter.Properties.Resources.BU;
@@ -545,6 +562,24 @@
             this.pictureBox5.TabIndex = 29;
             this.pictureBox5.TabStop = false;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(445, 9);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 13);
+            this.label5.TabIndex = 28;
+            this.label5.Text = "Organization";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(277, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(134, 13);
+            this.label4.TabIndex = 27;
+            this.label4.Text = "Parent: Child Business Unit";
+            // 
             // pictureBox3
             // 
             this.pictureBox3.Image = global::RoleDocumenter.Properties.Resources.P_BU;
@@ -553,6 +588,15 @@
             this.pictureBox3.Size = new System.Drawing.Size(17, 17);
             this.pictureBox3.TabIndex = 26;
             this.pictureBox3.TabStop = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(99, 10);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 13);
+            this.label3.TabIndex = 25;
+            this.label3.Text = "User";
             // 
             // pictureBox2
             // 
@@ -563,6 +607,15 @@
             this.pictureBox2.TabIndex = 24;
             this.pictureBox2.TabStop = false;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(41, 8);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(33, 13);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "None";
+            // 
             // pictureBox1
             // 
             this.pictureBox1.ErrorImage = global::RoleDocumenter.Properties.Resources.none;
@@ -572,60 +625,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(17, 17);
             this.pictureBox1.TabIndex = 22;
             this.pictureBox1.TabStop = false;
-            // 
-            // btnRetRoles
-            // 
-            this.btnRetRoles.FlatAppearance.BorderSize = 0;
-            this.btnRetRoles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRetRoles.ForeColor = System.Drawing.Color.White;
-            this.btnRetRoles.Image = global::RoleDocumenter.Properties.Resources.Role_refresh;
-            this.btnRetRoles.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRetRoles.Location = new System.Drawing.Point(241, 2);
-            this.btnRetRoles.Margin = new System.Windows.Forms.Padding(0);
-            this.btnRetRoles.Name = "btnRetRoles";
-            this.btnRetRoles.Size = new System.Drawing.Size(26, 20);
-            this.btnRetRoles.TabIndex = 5;
-            this.btnRetRoles.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnRetRoles.UseVisualStyleBackColor = true;
-            this.btnRetRoles.Click += new System.EventHandler(this.BtnRetRoles_Click);
-            // 
-            // tsbClose
-            // 
-            this.tsbClose.Image = global::RoleDocumenter.Properties.Resources.tsbClose_Image;
-            this.tsbClose.Name = "tsbClose";
-            this.tsbClose.Size = new System.Drawing.Size(64, 28);
-            this.tsbClose.Text = "Close";
-            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
-            // 
-            // btnExport
-            // 
-            this.btnExport.Image = global::RoleDocumenter.Properties.Resources.export;
-            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(68, 28);
-            this.btnExport.Text = "Export";
-            this.btnExport.ToolTipText = "Export to Excel";
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
-            // btnExport_D365
-            // 
-            this.btnExport_D365.Image = global::RoleDocumenter.Properties.Resources.export;
-            this.btnExport_D365.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExport_D365.Name = "btnExport_D365";
-            this.btnExport_D365.Size = new System.Drawing.Size(161, 28);
-            this.btnExport_D365.Text = "Export Dataverse Layout";
-            this.btnExport_D365.ToolTipText = "Export to Excel";
-            this.btnExport_D365.Click += new System.EventHandler(this.BtnExport_D365_Click);
-            // 
-            // btnMultiple
-            // 
-            this.btnMultiple.Image = global::RoleDocumenter.Properties.Resources.Double_Check;
-            this.btnMultiple.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMultiple.Name = "btnMultiple";
-            this.btnMultiple.Size = new System.Drawing.Size(115, 28);
-            this.btnMultiple.Text = "Export Multiple";
-            this.btnMultiple.Visible = false;
-            this.btnMultiple.Click += new System.EventHandler(this.BtnMultiple_Click);
             // 
             // RoleDocumenterCtl
             // 
@@ -716,7 +715,6 @@
         private System.Windows.Forms.TabPage tabRole;
         private System.Windows.Forms.TabPage tabTable;
         private System.Windows.Forms.SplitContainer splitTableMain;
-        private xrmtb.XrmToolBox.Controls.EntitiesDropdownControl dlTables;
         private System.Windows.Forms.Label lblTable;
         private System.Windows.Forms.DataGridView gvRoles;
         private System.Windows.Forms.SplitContainer splitTableTop;
@@ -734,5 +732,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripButton btnMultiple;
+        private System.Windows.Forms.ComboBox dlTable;
     }
 }

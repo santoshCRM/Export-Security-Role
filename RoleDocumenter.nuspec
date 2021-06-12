@@ -11,6 +11,10 @@
     <iconUrl>https://linked365.blog/wp-content/uploads/2020/03/smallIcon.png</iconUrl>
     <description>A XrmToolBox tool to create Excel document for Roles in Dataverse</description>
     <releaseNotes>
+      #14 Changed control used for table selection
+      #13 Resolved bug when role has ampersand in it
+      Altered layout of privlige to mimic the PP version
+      
       #11 Add Multiple select table export ✔✔✔
       #10 Merged EntitySecurityRole functionality with this 🙌
       #12 Fixed Misc Priv making corrupt Excel file ✔

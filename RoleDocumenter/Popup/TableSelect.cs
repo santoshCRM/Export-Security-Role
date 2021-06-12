@@ -27,9 +27,13 @@ namespace RoleDocumenter
                 int returnValue = 1;
 
                 if (sortOrder == SortOrder.Ascending)
+                {
                     returnValue = x.DisplayName.CompareTo(y.DisplayName);
+                }
                 else
+                {
                     returnValue = y.DisplayName.CompareTo(x.DisplayName);
+                }
 
                 return returnValue;
             }
@@ -69,7 +73,7 @@ namespace RoleDocumenter
             gvMultiTables.Columns["LogicalName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             gvMultiTables.Columns["LogicalName"].HeaderText = "Logical";
 
-            
+
 
         }
 
@@ -98,18 +102,25 @@ namespace RoleDocumenter
         private void TxtTableSearch_TextChanged(object sender, EventArgs e)
         {
             if (Entities == null || Entities.Count == 0)
+            {
                 return;
+            }
 
             if (!string.IsNullOrEmpty(txtTableSearch.Text))
+            {
                 gvMultiTables.DataSource = Entities.Where(x => x.DisplayName.ToLower().Contains(txtTableSearch.Text.ToLower())
-                || x.LogicalName.ToLower().Contains(txtTableSearch.Text.ToLower())).ToList();
+               || x.LogicalName.ToLower().Contains(txtTableSearch.Text.ToLower())).ToList();
+            }
+
             InitGrid();
         }
 
         private void gvMultiTables_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (gvMultiTables.Columns[e.ColumnIndex].Name != "DisplayName")
+            {
                 return;
+            }
 
             //get the current column details
             SortOrder sortOrder = getSortOrder(e.ColumnIndex, gvMultiTables);

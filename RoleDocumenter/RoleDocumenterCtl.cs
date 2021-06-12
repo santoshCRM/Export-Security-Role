@@ -52,7 +52,7 @@ namespace RoleDocumenter
                 chkLocalised.Checked = roleSettings.DisplayNames;
             }
             ExecuteMethod(PopulateRoles);
-            dlTables.Service = Service;
+            //dlTables.Service = Service;
         }
 
         private void tsbClose_Click(object sender, EventArgs e)
@@ -82,7 +82,7 @@ namespace RoleDocumenter
 
         }
 
-       
+
 
         private void drp_roles_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -102,7 +102,9 @@ namespace RoleDocumenter
         private void Grdview_role_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (grdview_role.Columns[e.ColumnIndex].Name != "DisplayName")
+            {
                 return;
+            }
 
             //get the current column details
             SortOrder sortOrder = getSortOrder(e.ColumnIndex, grdview_role);
@@ -147,7 +149,9 @@ namespace RoleDocumenter
                 CreateExcel(package, PrivilegeSets, MisPrivilegeSets, "Table Privileges");
                 var fileName = saveExcel(((SecurityRole)drp_roles.SelectedItem).Name);
                 if (fileName == null)
+                {
                     return;
+                }
 
                 //if (saveExcel(((SecurityRole)drp_roles.SelectedItem).Name).ToString()) == null)
                 try
@@ -172,12 +176,16 @@ namespace RoleDocumenter
                     return;
                 }
                 var package = new ExcelPackage();
-                var tableName = dlTables.SelectedEntity.DisplayName?.UserLocalizedLabel.Label.ToString() ??
-                    dlTables.SelectedEntity.LogicalName;
+
+                var tableName = ((Table)dlTable.SelectedItem).Entity.DisplayName?.UserLocalizedLabel.Label.ToString() ??
+                    ((Table)dlTable.SelectedItem).Entity.LogicalName;
                 CreateExcel(package, TablePriviliges, null, tableName);
                 var fileName = saveExcel(tableName);
                 if (fileName == null)
+                {
                     return;
+                }
+
                 try
                 {
                     package.SaveAs(new FileInfo(fileName));
@@ -195,7 +203,9 @@ namespace RoleDocumenter
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             if (PrivilegeSets == null || PrivilegeSets.Count == 0)
+            {
                 return;
+            }
 
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
@@ -344,7 +354,9 @@ namespace RoleDocumenter
 
             var fileName = saveExcel(((SecurityRole)drp_roles.SelectedItem).Name);
             if (fileName == null)
+            {
                 return;
+            }
 
             try
             {
@@ -384,10 +396,11 @@ namespace RoleDocumenter
         {
             if (tabSetMain.SelectedTab == tabTable)
             {
-                if (dlTables.SelectedEntity == null)
-                    dlTables.LoadData();
+                //if (dlTables.SelectedEntity == null)
+                //    dlTables.LoadData();
                 btnExport_D365.Visible = false;
                 btnMultiple.Visible = true;
+                ExecuteMethod(PopulateTables);
             }
             else
             {
@@ -396,15 +409,13 @@ namespace RoleDocumenter
             }
         }
 
-        private void DlTables_SelectedItemChanged(object sender, EventArgs e)
-        {
-            if (dlTables.SelectedEntity != null) ExecuteMethod(GetTableRoles, dlTables.SelectedEntity);
-        }
 
         private void GvRoles_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (gvRoles.Columns[e.ColumnIndex].Name != "DisplayName")
+            {
                 return;
+            }
 
             //get the current column details
             SortOrder sortOrder = getSortOrder(e.ColumnIndex, gvRoles);
@@ -419,12 +430,18 @@ namespace RoleDocumenter
         private void TxtTableSearch_TextChanged(object sender, EventArgs e)
         {
             if (TablePriviliges == null || TablePriviliges.Count == 0)
+            {
                 return;
+            }
 
             if (!string.IsNullOrEmpty(txtTableSearch.Text))
+            {
                 gvRoles.DataSource = TablePriviliges.Where(x => x.Name.ToLower().Contains(txtTableSearch.Text.ToLower()) || x.DisplayName.ToLower().Contains(txtTableSearch.Text.ToLower())).ToList();
+            }
             else
+            {
                 gvRoles.DataSource = TablePriviliges;
+            }
 
             InitRoleGrid();
         }
@@ -434,21 +451,29 @@ namespace RoleDocumenter
         {
             // dlTables.AllEntities
 
-            var frmMulti = new FrmMultiTable(dlTables.AllEntities);
-            if (frmMulti.ShowDialog() != DialogResult.OK) return;
+            var frmMulti = new FrmMultiTable(Entities);
+            if (frmMulti.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
 
             if (frmMulti.SelectedEntities.Count == 0)
+            {
                 return;
+            }
 
             var package = CreateMultiTableExcel(frmMulti.SelectedEntities);
 
             var fileName = saveExcel("MultiTables" + DateTime.UtcNow.ToString("yyyyMMddHHmm"));
             if (fileName == null)
+            {
                 return;
+            }
+
             try
             {
                 package.SaveAs(new FileInfo(fileName));
-                
+
             }
             catch (Exception exc)
             {
@@ -456,6 +481,12 @@ namespace RoleDocumenter
             }
         }
 
-       
+        private void dlTable_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (dlTable.SelectedItem != null)
+            {
+                ExecuteMethod(GetTableRoles, ((Table)dlTable.SelectedItem).Entity);
+            }
+        }
     }
 }
