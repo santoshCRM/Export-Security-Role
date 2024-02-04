@@ -11,6 +11,9 @@
     <iconUrl>https://linked365.blog/wp-content/uploads/2020/03/smallIcon.png</iconUrl>
     <description>A XrmToolBox tool to create Excel document for Roles in Dataverse</description>
     <releaseNotes>
+
+      #18 Rebuilt using latest versions 
+	 
       #14 Changed control used for table selection
       #13 Resolved bug when role has ampersand in it
       Altered layout of privlige to mimic the PP version
@@ -31,7 +34,7 @@
     <copyright>Copyright 2020</copyright>
     <tags>XrmToolBox Plugins Role Documenter</tags>
     <dependencies>
-      <dependency id="XrmToolBox" version="1.2020.6.40" />
+		<dependency id="XrmToolBox" version="1.2023.12.68"/>
     </dependencies>
   </metadata>
   <files>
